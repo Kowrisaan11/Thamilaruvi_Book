@@ -24,10 +24,10 @@ const Index = () => {
       <div className="relative z-10 flex flex-col items-center justify-center p-8">
         {/* Title */}
         <h1 className="font-serif text-5xl md:text-7xl font-bold text-gold mb-4 text-center animate-glow-pulse">
-          The Ancient Tome
+          Thamilaruvi 2025
         </h1>
         <p className="font-body text-xl md:text-2xl text-foreground/80 mb-12 text-center italic">
-          Click to reveal the secrets within...
+          Click here...
         </p>
 
         {/* Book Container */}
