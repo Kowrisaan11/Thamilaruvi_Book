@@ -1,19 +1,27 @@
-import { useState } from "react";
-import closedBookImg from "@/assets/closed-book.png";
-import openBookImg from "@/assets/open-book.png";
+import { useRef, useState } from "react";
 import libraryBg from "@/assets/library-background.jpg";
+import openVideo from "@/assets/openvideo.mp4";
 
 const Index = () => {
-  const [isBookOpen, setIsBookOpen] = useState(false);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const handleBookClick = () => {
-    setIsBookOpen(!isBookOpen);
+  const handleVideoClick = () => {
+    if (!isPlaying) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleVideoEnd = () => {
+    setIsPlaying(false);
+    videoRef.current.currentTime = 0; // Reset to start
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden flex items-center justify-center">
       {/* Background Image with Blur */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${libraryBg})` }}
       >
@@ -27,29 +35,24 @@ const Index = () => {
           Thamilaruvi 2025
         </h1>
         <p className="font-body text-xl md:text-2xl text-foreground/80 mb-12 text-center italic">
-          Click here...
+          Launch the Book...
         </p>
 
-        {/* Book Container */}
-        <div 
-          className="relative cursor-pointer transition-all duration-700 hover:scale-105 animate-float"
-          onClick={handleBookClick}
+        {/* Video Container */}
+        <div
+          className="relative cursor-pointer transition-all duration-700 hover:scale-105 animate-float rounded-xl overflow-hidden shadow-2xl"
+          onClick={handleVideoClick}
         >
-          {/* Book Image */}
-          <img
-            src={isBookOpen ? openBookImg : closedBookImg}
-            alt={isBookOpen ? "Open ancient book" : "Closed ancient book"}
-            className={`w-64 md:w-96 lg:w-[500px] h-auto drop-shadow-book ${
-              isBookOpen ? "animate-book-open" : ""
-            }`}
+          <video
+            ref={videoRef}
+            src={openVideo}
+            className="w-64 md:w-96 lg:w-[500px] h-auto rounded-xl"
+            onEnded={handleVideoEnd}
           />
-          
-          {/* Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-radial from-gold/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-lg" />
         </div>
 
-        {/* Mystical Text */}
-        {isBookOpen && (
+        {/* Mystical Text (shows after video finishes) */}
+        {!isPlaying && (
           <div className="mt-8 text-center animate-[fade-in_0.8s_ease-out]">
             <p className="font-body text-lg md:text-xl text-foreground/90 max-w-2xl leading-relaxed">
               "In ancient times, when magic flowed freely through the world, 
