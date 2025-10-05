@@ -5,6 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/Thamilaruvi_Book/", // 👈 VERY IMPORTANT for GitHub Pages (repo name)
   server: {
     host: "::",
     port: 8080,
